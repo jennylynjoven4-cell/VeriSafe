@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriSafe - Your Safety, Our Priority</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f0f8ff;color:#12366b}
+header{background:linear-gradient(135deg,#0645a5,#079cf0);color:white;padding:28px 20px 25px;border-radius:0 0 25px 25px}
+header h1{margin:0;font-size:27px}
+header p{margin:8px 0}
+.container{padding:18px;max-width:600px;margin:auto}
+.card{background:white;padding:18px;border-radius:17px;margin-bottom:15px;box-shadow:0 3px 12px #bdd9ed55}
+.status{display:flex;align-items:center;gap:15px}
+.shield{font-size:40px;background:#d9f9e9;padding:12px;border-radius:15px}
+.green{color:#08a76c;font-size:23px;font-weight:bold}
+h2{font-size:21px}
+h3{margin:5px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.action{background:#edf7ff;border-radius:14px;padding:15px 5px;text-align:center;border:1px solid #d8eafa;cursor:pointer}
+.action span{display:block;font-size:27px;margin-bottom:8px}
+.action b{font-size:13px}
+button{border:0;border-radius:12px;padding:13px 18px;background:#087fea;color:white;font-size:15px;font-weight:bold;cursor:pointer}
+input,textarea{width:100%;padding:14px;border:1px solid #cbddec;border-radius:11px;font-size:15px;margin:8px 0 13px}
+textarea{min-height:110px;resize:vertical}
+.full{width:100%}
+.secondary{background:#eaf4ff;color:#0757ad}
+.danger{background:#ed354a}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 2px;border-top:1px solid #d9e8f4;z-index:5}
+nav button{background:white;color:#55769d;padding:8px 4px;font-size:11px;flex:1}
+nav button.active{color:#087fea}
+nav span{display:block;font-size:21px;margin-bottom:4px}
+.page{display:none;padding-bottom:85px}
+.page.active{display:block}
+.small{font-size:13px;color:#68819c;line-height:1.5}
+.result{padding:15px;border-radius:12px;background:#edf7ff;margin-top:15px}
+.hidden{display:none}
+.item{padding:14px;border-bottom:1px solid #e5edf5}
+footer{text-align:center;color:#8ba3ba;font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🛡️ VeriSafe</h1>
+<p>Your Safety, Our Priority</p>
+</header>
+
+<main class="container">
+
+<section id="home" class="page active">
+<h2>Hello! Welcome to VeriSafe 👋</h2>
+<p class="small">Your online safety starts here.</p>
+
+<div class="card status">
+<div class="shield">🛡️</div>
+<div>
+<div>Protection Status</div>
+<div class="green">Active</div>
+<small class="small">Stay alert and stay protected.</small>
+</div>
+</div>
+
+<h3>Quick Actions</h3>
+<div class="grid">
+<div class="action" onclick="showPage('scanner')"><span>🔍</span><b>Scan</b></div>
+<div class="action" onclick="showPage('report')"><span>🚨</span><b>Report</b></div>
+<div class="action" onclick="showPage('family')"><span>👨‍👩‍👧</span><b>Family</b></div>
+</div>
+
+<div class="card" style="margin-top:17px">
+<h3>🔐 Cyber Safety</h3>
+<p class="small">Learn how to protect yourself from online scams and suspicious activities.</p>
+<button class="full" onclick="showPage('tips')">Learn More</button>
+</div>
+
+<div class="card">
+<h3>⚠️ I Think I've Been Scammed</h3>
+<p class="small">Get helpful steps if you encounter a suspicious message or transaction.</p>
+<button class="full danger" onclick="showPage('report')">Get Help</button>
+</div>
+</section>
+
+<section id="scanner" class="page">
+<h2>🔍 Scam Scanner</h2>
+<p class="small">Check suspicious messages, links, or phone numbers.</p>
+<div class="card">
+<label><b>Choose what to check</b></label>
+<select id="type" style="width:100%;padding:12px;border-radius:10px;margin:12px 0;border:1px solid #ccc">
+<option>Message</option>
+<option>Link</option>
+<option>Phone Number</option>
+</select>
+<textarea id="content" placeholder="Enter suspicious message, link, or phone number..."></textarea>
+<button class="full" onclick="scan()">🔍 Scan Now</button>
+<div id="scanResult" class="result hidden"></div>
+<p class="small">This is a basic keyword-based checker. It cannot guarantee that a message, link, or number is safe.</p>
+</div>
+</section>
+
+<section id="report" class="page">
+<h2>🚨 Report Scam</h2>
+<div class="card">
+<p class="small">Record details of suspicious content. This demo saves reports only on this device.</p>
+<input id="reportType" placeholder="Type of scam">
+<textarea id="reportDetails" placeholder="Describe what happened..."></textarea>
+<button class="full" onclick="submitReport()">Submit Report</button>
+<div id="reportResult"></div>
+</div>
+</section>
+
+<section id="family" class="page">
+<h2>👨‍👩‍👧 Trusted Family</h2>
+<div class="card">
+<p class="small">Keep a list of trusted people you can contact for help.</p>
+<input id="familyName" placeholder="Contact name">
+<button class="full" onclick="addFamily()">+ Add Contact</button>
+</div>
+<div class="card">
+<h3>Your Trusted Contacts</h3>
+<div id="familyList"></div>
+</div>
+</section>
+
+<section id="insurance" class="page">
+<h2>🛡️ Cyber Insurance</h2>
+<div class="card">
+<div style="font-size:55px;text-align:center">🔰</div>
+<h3 style="text-align:center">Cyber Protection Information</h3>
+<p class="small">Learn about financial protection against online risks. This section provides educational information, not an actual insurance policy.</p>
+<h3>Key Benefits</h3>
+<p>✅ Learn about cyber fraud protection.</p>
+<p>✅ Understand identity theft risks.</p>
+<p>✅ Learn about reporting financial fraud.</p>
+<button class="full" onclick="alert('Contact a licensed insurance provider to learn about available coverage.')">Learn About Coverage</button>
+</div>
+</section>
+
+<section id="tips" class="page">
+<h2>💡 Scam Awareness</h2>
+<div class="card">
+<h3>Tips to Stay Safe Online</h3>
+<div class="item">🔒 Never share your password or OTP.</div>
+<div class="item">🔗 Avoid clicking suspicious links.</div>
+<div class="item">📱 Verify unknown phone numbers.</div>
+<div class="item">💳 Never send money to unverified people.</div>
+<div class="item">🔍 Check website addresses carefully.</div>
+<div class="item">🚨 Report suspicious activities.</div>
+</div>
+</section>
+
+<section id="more" class="page">
+<h2>⚙️ More Settings</h2>
+<div class="card">
+<div class="item" onclick="alert('VeriSafe Version 1.0')">ℹ️ App Information</div>
+<div class="item" onclick="alert('We respect your privacy. This demo stores basic information locally on your device.')">🔐 Privacy Information</div>
+<div class="item" onclick="alert('VeriSafe Demo Project')">📩 Contact Us</div>
+<div class="item" onclick="alert('Thank you for using VeriSafe!')">⭐ Feedback</div>
+</div>
+</section>
+
+</main>
+
+<nav>
+<button class="active" onclick="showPage('home',this)"><span>🏠</span>Home</button>
+<button onclick="showPage('scanner',this)"><span>🔍</span>Scanner</button>
+<button onclick="showPage('family',this)"><span>👥</span>Family</button>
+<button onclick="showPage('insurance',this)"><span>🛡️</span>Insurance</button>
+<button onclick="showPage('more',this)"><span>•••</span>More</button>
+</nav>
+
+<script>
+function showPage(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+else{
+let buttons=document.querySelectorAll('nav button');
+buttons.forEach(b=>{if(b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active')});
+}
+window.scrollTo(0,0);
+}
+
+function scan(){
+let value=document.getElementById('content').value.trim();
+let type=document.getElementById('type').value;
+let result=document.getElementById('scanResult');
+if(!value){alert('Please enter something to scan.');return;}
+let words=['prize','winner','claim now','urgent','verify your account','send money','free gift','password','otp','click here'];
+let matches=words.filter(w=>value.toLowerCase().includes(w));
+let suspicious=matches.length>0;
+result.classList.remove('hidden');
+result.innerHTML=suspicious?
+'<h3 style="color:#df3045">⚠️ Suspicious Content</h3><p>Some warning words were detected: '+matches.join(', ')+'</p><p>Do not click links or share personal information. Verify independently.</p>':
+'<h3 style="color:#15966b">No Warning Keywords Found</h3><p>No common warning keywords were detected. This does NOT mean the content is safe.</p>';
+}
+
+function addFamily(){
+let name=document.getElementById('familyName').value.trim();
+if(!name){alert('Enter a contact name.');return;}
+let contacts=JSON.parse(localStorage.getItem('verisafeFamily')||'[]');
+contacts.push(name);
+localStorage.setItem('verisafeFamily',JSON.stringify(contacts));
+document.getElementById('familyName').value='';
+renderFamily();
+}
+
+function renderFamily(){
+let contacts=JSON.parse(localStorage.getItem('verisafeFamily')||'[]');
+document.getElementById('familyList').innerHTML=contacts.length?
+contacts.map((n,i)=>'<div class="item">👤 '+escapeHTML(n)+' <button class="danger" style="float:right;padding:5px 10px" onclick="removeFamily('+i+')">Remove</button></div>').join(''):
+'<p class="small">No contacts added yet.</p>';
+}
+function removeFamily(i){
+let contacts=JSON.parse(localStorage.getItem('verisafeFamily')||'[]');
+contacts.splice(i,1);
+localStorage.setItem('verisafeFamily',JSON.stringify(contacts));
+renderFamily();
+}
+function escapeHTML(s){
+return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function submitReport(){
+let type=document.getElementById('reportType').value.trim();
+let details=document.getElementById('reportDetails').value.trim();
+if(!type||!details){alert('Please complete the report.');return;}
+let reports=JSON.parse(localStorage.getItem('verisafeReports')||'[]');
+reports.push({type,details,date:new Date().toLocaleString()});
+localStorage.setItem('verisafeReports',JSON.stringify(reports));
+document.getElementById('reportResult').innerHTML='<p style="color:green">Report saved on this device!</p>';
+document.getElementById('reportType').value='';
+document.getElementById('reportDetails').value='';
+}
+renderFamily();
+</script>
+</body>
+</html>
